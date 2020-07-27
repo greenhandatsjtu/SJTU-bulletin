@@ -21,6 +21,8 @@ SJTU-bulletin是一个聚合类web app，爬取教务处、电院学生版、实
 pip install -r requirements.txt
 ```
 
+接着将`bulletin.db.example`重命名为`bulletin.db`
+
 然后爬取通知：
 
 ```bash
