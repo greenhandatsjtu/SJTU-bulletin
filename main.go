@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "github.com/icattlecoder/godaemon"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/labstack/echo"
