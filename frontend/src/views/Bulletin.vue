@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid>
+    <v-container fluid class="px-4">
         <v-snackbar
                 rounded
                 v-model="snackbar.open"
@@ -81,7 +81,7 @@
         },
         created: function () {
             // 从服务器获取消息
-            this.$api.get('/api/notices',)
+            this.$api.get('/notices',)
                 .then((response) => {
                     // handle success
                     this.notices = response.data
