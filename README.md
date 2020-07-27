@@ -58,3 +58,5 @@ GO111MODULE=on go build -o server main.go
 
 + [ ] `crontab`定时爬取
 + [ ] dockerize
++ [ ] 分页
++ [ ] 自动删除旧通知，防止数据库过大
