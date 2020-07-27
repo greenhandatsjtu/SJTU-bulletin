@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import sqlite3
 
 
@@ -16,7 +17,7 @@ class CrawlerPipeline:
 # NoticePipeline 进行连接数据库等初始化操作，并将符合条件的item存入数据库
 class NoticePipeline:
     def __init__(self):
-        self.conn = sqlite3.connect('crawler/bulletin.db')
+        self.conn = sqlite3.connect(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bulletin.db'))
         self.cursor = self.conn.cursor()
 
     def process_item(self, item, spider):
@@ -25,7 +26,7 @@ class NoticePipeline:
             try:
                 self.cursor.execute(
                     """INSERT INTO notices (title, href, `date`, `type`) VALUES ('%s', '%s', '%s', '%s')""" % (
-                    item['title'], item['href'], item['date'], item['_type']))
+                        item['title'], item['href'], item['date'], item['_type']))
                 self.conn.commit()  # commit是必须的
             except:
                 print("Duplicated notice")
