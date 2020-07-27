@@ -5,11 +5,13 @@ SJTU SEIEE Bulletin. 上海交大电院公告栏
 
 SJTU-bulletin是一个聚合类web app，爬取教务处、电院学生版、实习信息和全职招聘4个网页的通知，最终展示在一个网页上，方便、及时。
 
+网址：http://120.79.202.172:12345/
+
 ### 技术栈
 
 + 爬虫：`Scrapy`+`sqlite`
 + 前端：`Vue`+`Vuetify`
-+ 后端：`Go`+`Echo`+`gorm`
++ 后端：`Go`+`Echo`+`Gorm`
 
 ## 使用方法
 
@@ -40,7 +42,8 @@ npm run build
 最后回到项目根目录，运行服务器：
 
 ```bash
-go run main.go -d=true
+GO111MODULE=on go build -o server main.go
+./server -d=true
 ```
 
 使用浏览器访问`http://localhost:8080`
@@ -51,3 +54,7 @@ go run main.go -d=true
 
 <img src="images/phone.png" style="zoom:50%;" />
 
+## TODO
+
++ [ ] `crontab`定时爬取
++ [ ] dockerize
