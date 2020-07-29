@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import re
+
 import scrapy
 
 from ..items import NoticeItem
@@ -67,7 +69,7 @@ class NoticeSpider(scrapy.Spider):
         for new in news:
             item = NoticeItem()
             item['title'] = new.css('a::attr(title)').extract_first()
-            item['date'] = new.css('span::text').extract_first()
+            item['date'] = re.sub("\.", "-", new.css('span::text').extract_first())
             item['href'] = response.urljoin(new.css('a::attr("href")').extract_first())
             item['_type'] = "sjtuNotice"
             yield item
@@ -78,7 +80,7 @@ class NoticeSpider(scrapy.Spider):
         for new in news:
             item = NoticeItem()
             item['title'] = new.css('a::text').extract_first()
-            item['date'] = new.css('.date::text').re('[\d-]+')[0]
+            item['date'] = "20" + new.css('.date::text').re('[\d-]+')[0]
             item['href'] = response.urljoin(new.css('a::attr("href")').extract_first())
             item['_type'] = "ourHome"
             yield item
