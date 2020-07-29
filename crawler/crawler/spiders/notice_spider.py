@@ -13,6 +13,8 @@ class NoticeSpider(scrapy.Spider):
         yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/705-1-20.htm', callback=self.parseXsb)
         yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/2496-1-20.htm', callback=self.parsePartTime)
         yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/2495-1-20.htm', callback=self.parseFullTime)
+        yield scrapy.Request(url='https://www.sjtu.edu.cn/tg/index.html', callback=self.parseSjtuNotice)
+        yield scrapy.Request(url='http://ourhome.sjtu.edu.cn/news', callback=self.parseOurHome)
 
     # 爬取教务处通知
     def parseJwc(self, response):
@@ -24,7 +26,6 @@ class NoticeSpider(scrapy.Spider):
             item['date'] = new.css("td:nth-child(2)::text").get().lstrip("\r\n\t\t\t\t [").rstrip(" ]\r\n\t\t\t ")
             item['href'] = response.urljoin(new.css('a::attr(href)').get())
             item['_type'] = "jwc"
-            self.logger.info(item)
             yield item
 
     # 爬取学生办通知
@@ -58,4 +59,26 @@ class NoticeSpider(scrapy.Spider):
             item['date'] = new.css('span::text').extract_first().lstrip("[").rstrip("]")
             item['href'] = response.urljoin(new.css('a::attr("href")').extract_first())
             item['_type'] = "fullTime"
+            yield item
+
+    # 爬取交大官网通知通告
+    def parseSjtuNotice(self, response):
+        news = response.css('.pageMain li')
+        for new in news:
+            item = NoticeItem()
+            item['title'] = new.css('a::attr(title)').extract_first()
+            item['date'] = new.css('span::text').extract_first()
+            item['href'] = response.urljoin(new.css('a::attr("href")').extract_first())
+            item['_type'] = "sjtuNotice"
+            yield item
+
+    # 爬取生活园区通知
+    def parseOurHome(self, response):
+        news = response.css('.article center[style]')
+        for new in news:
+            item = NoticeItem()
+            item['title'] = new.css('a::text').extract_first()
+            item['date'] = new.css('.date::text').re('[\d-]+')[0]
+            item['href'] = response.urljoin(new.css('a::attr("href")').extract_first())
+            item['_type'] = "ourHome"
             yield item
