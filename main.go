@@ -17,10 +17,13 @@ type Notice struct {
 	Title string `json:"title"`
 }
 
-var db *gorm.DB
+var (
+	db  *gorm.DB
+	err error
+)
 
 func main() {
-	db, err := gorm.Open("sqlite3", "crawler/crawler/bulletin.db")
+	db, err = gorm.Open("sqlite3", "crawler/crawler/bulletin.db")
 	if err != nil {
 		log.Println(err)
 	}
