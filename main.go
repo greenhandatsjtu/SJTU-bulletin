@@ -17,6 +17,8 @@ type Notice struct {
 	Title string `json:"title"`
 }
 
+var db *gorm.DB
+
 func main() {
 	db, err := gorm.Open("sqlite3", "crawler/crawler/bulletin.db")
 	if err != nil {
@@ -29,13 +31,15 @@ func main() {
 	e.Use(middleware.Logger())
 
 	e.Static("/", ""+"frontend/dist")
-	e.GET("/notices", func(c echo.Context) error {
-		var notices []Notice
-		if err := db.Order("date desc").Find(&notices).Error; err != nil {
-			log.Println(err)
-			return c.JSON(http.StatusNotFound, nil)
-		}
-		return c.JSON(http.StatusOK, notices)
-	})
+	e.GET("/notices", fetchNotices)
 	_ = e.Start(":8080")
+}
+
+func fetchNotices(c echo.Context) error {
+	var notices []Notice
+	if err := db.Order("date desc").Find(&notices).Error; err != nil {
+		log.Println(err)
+		return c.JSON(http.StatusNotFound, nil)
+	}
+	return c.JSON(http.StatusOK, notices)
 }

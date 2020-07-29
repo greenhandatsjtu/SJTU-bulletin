@@ -2,35 +2,29 @@
     <v-container fluid class="px-4">
         <v-snackbar
                 rounded
+                app
                 v-model="snackbar.open"
                 :color="snackbar.status"
-                :timeout="10000"
+                :timeout="2000"
                 top
         >
             {{ snackbar.message }}
-<!--            <v-btn-->
-<!--                    fab-->
-<!--                    dark-->
-<!--                    @click="snackbar.open = false"-->
-<!--            >-->
-<!--                <v-icon>mdi-close</v-icon>-->
-<!--            </v-btn>-->
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                        icon
+                        @click="snackbar.open = false"
+                >
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+            </template>
         </v-snackbar>
         <v-divider></v-divider>
         <v-card class="mt-2">
             <!--            复选框-->
             <v-row dense justify="center" align="center">
-                <v-col>
-                    <v-checkbox class="mx-auto" v-model="selected" label="教务处" value="jwc"></v-checkbox>
-                </v-col>
-                <v-col>
-                    <v-checkbox class="mx-auto" v-model="selected" label="学生办" value="xsb"></v-checkbox>
-                </v-col>
-                <v-col>
-                    <v-checkbox class="mx-auto" v-model="selected" label="实习信息" value="partTime"></v-checkbox>
-                </v-col>
-                <v-col>
-                    <v-checkbox class="mx-auto" v-model="selected" label="全职招聘" value="fullTime"></v-checkbox>
+                <v-col v-for="(checkbox, index) in checkboxes" :key="index">
+                    <v-checkbox hide-details :color="checkbox.color" class="px-0 my-2 mx-auto" v-model="selected" :label="checkbox.label"
+                                :value="checkbox.value"></v-checkbox>
                 </v-col>
             </v-row>
         </v-card>
@@ -62,7 +56,15 @@
                 open: false,
                 message: null,
                 status: "success",
-            }
+            },
+            checkboxes: [
+                {value: 'jwc', label: '教务处', color: 'blue'},
+                {value: 'xsb', label: '学生办', color: 'teal'},
+                {value: 'sjtuNotice', label: '通知通告', color: 'red'},
+                {value: 'partTime', label: '实习信息', color: 'green'},
+                {value: 'fullTime', label: '全职招聘', color: 'orange'},
+                {value: 'ourHome', label: '生活园区', color: 'grey'},
+            ]
         }),
         watch: {
             // 当复选框有变化，展示的通知要进行相应筛选

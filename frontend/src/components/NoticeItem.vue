@@ -49,7 +49,11 @@
                     case 'partTime':
                         return ['实习信息', 'green lighten-3']
                     case 'fullTime':
-                        return ['全职招聘', 'deep-orange lighten-3']
+                        return ['全职招聘', 'orange lighten-3']
+                    case 'sjtuNotice':
+                        return ['通知通告', 'red lighten-3']
+                    case 'ourHome':
+                        return ['生活园区', 'grey lighten-2']
                 }
             }
         }

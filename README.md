@@ -1,9 +1,9 @@
 # SJTU-bulletin
-SJTU SEIEE Bulletin. 上海交大电院公告栏
+SJTU SEIEE Bulletin. 上海交大公告栏
 
 ## 介绍
 
-SJTU-bulletin是一个聚合类web app，爬取教务处、电院学生办、实习信息和全职招聘4个网页的通知，最终展示在一个网页上，方便、及时。
+SJTU-bulletin是一个聚合类web app，爬取[教务处](http://jwc.sjtu.edu.cn/web/sjtu/198076.htm)、[电院学生办](http://xsb.seiee.sjtu.edu.cn/xsb/list/705-1-20.htm)、[实习信息](http://xsb.seiee.sjtu.edu.cn/xsb/list/2496-1-20.htm)、[全职招聘](http://xsb.seiee.sjtu.edu.cn/xsb/list/2495-1-20.htm)、[交大官网通知通告](https://www.sjtu.edu.cn/tg/index.html)和[生活园区通知](http://ourhome.sjtu.edu.cn/news)等网页的通知，最终展示在一个网页上，方便、及时。
 
 网址：http://120.79.202.172:12345/
 
@@ -58,7 +58,8 @@ GO111MODULE=on go build -o server main.go
 
 ## TODO
 
-+ [ ] `crontab`定时爬取
++ [x] 新增交大官网通知通告、生活园区通知
++ [x] `crontab`定时爬取
 + [ ] dockerize
 + [ ] 分页
 + [ ] 自动删除旧通知，防止数据库过大
