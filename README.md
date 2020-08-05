@@ -64,4 +64,4 @@ GO111MODULE=on go build -o server main.go
 + [x] 分页
 + [ ] ~~自动删除旧通知，防止数据库过大~~
 + [ ] ~~页面cache~~
-+ [ ] 实现TapToTop
++ [x] 实现TapToTop
