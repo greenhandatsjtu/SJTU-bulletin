@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "roboto-fontface": "*",
     "vue": "^2.6.11",
+    "vue-infinite-loading": "^2.4.5",
     "vuetify": "^2.2.11"
   },
   "devDependencies": {

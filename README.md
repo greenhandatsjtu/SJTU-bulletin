@@ -21,7 +21,7 @@ SJTU-bulletin是一个聚合类web app，爬取[教务处](http://jwc.sjtu.edu.c
 pip install -r requirements.txt
 ```
 
-接着将`bulletin.db.example`重命名为`bulletin.db`
+接着将`bulletin.db.example`复制到`bulletin.db`
 
 然后爬取通知：
 
@@ -52,15 +52,16 @@ GO111MODULE=on go build -o server main.go
 
 ## 截图
 
-![](images/computer.png)
-
-<img src="images/phone.png" style="zoom:50%;" />
+|          桌面端          |        移动端         |
+| :----------------------: | :-------------------: |
+| ![](images/computer.png) | ![](images/phone.png) |
 
 ## TODO
 
 + [x] 新增交大官网通知通告、生活园区通知
 + [x] `crontab`定时爬取
 + [ ] dockerize
-+ [ ] 分页
-+ [ ] 自动删除旧通知，防止数据库过大
-+ [ ] 页面cache
++ [x] 分页
++ [ ] ~~自动删除旧通知，防止数据库过大~~
++ [ ] ~~页面cache~~
++ [ ] 实现TapToTop

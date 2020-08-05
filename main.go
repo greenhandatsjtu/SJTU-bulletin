@@ -8,6 +8,7 @@ import (
 	"github.com/labstack/echo/middleware"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type Notice struct {
@@ -27,7 +28,6 @@ func main() {
 	if err != nil {
 		log.Println(err)
 	}
-	db.AutoMigrate(&Notice{})
 
 	e := echo.New()
 	e.Use(middleware.Recover())
@@ -39,8 +39,14 @@ func main() {
 }
 
 func fetchNotices(c echo.Context) error {
+	page := c.QueryParam("page")
+	var pageInt int
+	if pageInt, err = strconv.Atoi(page); err != nil {
+		pageInt = 0
+	}
 	var notices []Notice
-	if err := db.Order("date desc").Find(&notices).Error; err != nil {
+	//enable paging
+	if err := db.Order("date desc").Offset(pageInt * 25).Limit(25).Find(&notices).Error; err != nil {
 		log.Println(err)
 		return c.JSON(http.StatusNotFound, nil)
 	}
