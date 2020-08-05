@@ -21,7 +21,7 @@
     <v-divider></v-divider>
     <v-card class="mt-2">
       <!--            复选框-->
-      <v-row align="center" dense justify="center">
+      <v-row align="center" dense justify="center" class="grey lighten-2">
         <v-col :key="index" v-for="(checkbox, index) in checkboxes">
           <v-checkbox :color="checkbox.color" :label="checkbox.label" :value="checkbox.value" class="px-0 my-2 mx-auto"
                       hide-details
@@ -61,7 +61,7 @@ export default {
       {value: 'sjtuNotice', label: '通知通告', color: 'red'},
       {value: 'partTime', label: '实习信息', color: 'green'},
       {value: 'fullTime', label: '全职招聘', color: 'orange'},
-      {value: 'ourHome', label: '生活园区', color: 'grey'},
+      {value: 'ourHome', label: '生活园区', color: 'cyan'},
     ]
   }),
   methods: {

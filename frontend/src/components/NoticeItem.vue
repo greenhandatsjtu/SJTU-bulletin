@@ -53,7 +53,7 @@
                     case 'sjtuNotice':
                         return ['通知通告', 'red lighten-3']
                     case 'ourHome':
-                        return ['生活园区', 'grey lighten-2']
+                        return ['生活园区', 'cyan lighten-4']
                 }
             }
         }

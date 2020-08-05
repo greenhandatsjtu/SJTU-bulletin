@@ -30,21 +30,45 @@
     </v-app-bar>
 
     <v-main>
+      <v-row class="px-2 pt-1 ma-auto">
+        <v-chip
+            class="mx-2 mt-1 font-weight-bold"
+            color="primary"
+            text-color="white"
+        >
+          <v-avatar left>
+            <v-icon>mdi-account-circle</v-icon>
+          </v-avatar>
+          Visitor {{visitor}}
+        </v-chip>
+        <v-chip
+            class="mx-2 mt-1 font-weight-bold"
+            color="green"
+            text-color="white"
+        >
+          <v-avatar left>
+            <v-icon>mdi-web</v-icon>
+          </v-avatar>
+          Request {{request}}
+        </v-chip>
+      </v-row>
       <Bulletin/>
     </v-main>
-    <v-btn
-        v-if="offsetTop>=1000"
-        @click="$vuetify.goTo(0)"
-        bottom
-        large
-        color="pink lighten-3"
-        dark
-        fab
-        fixed
-        right
-    >
-      <v-icon>mdi-arrow-up</v-icon>
-    </v-btn>
+    <v-fab-transition mode="">
+      <v-btn
+          v-show="offsetTop>=1000"
+          @click="$vuetify.goTo(0)"
+          bottom
+          large
+          color="pink lighten-3"
+          dark
+          fab
+          fixed
+          right
+      >
+        <v-icon>mdi-arrow-up</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </v-app>
 </template>
 
@@ -60,11 +84,19 @@ export default {
 
   data: () => ({
     offsetTop: 0,
+    visitor: 0,
+    request: 0,
   }),
   methods: {
     onScroll(e) {
       this.offsetTop = document.scrollingElement.scrollTop
     },
   },
+  beforeCreate() {
+    this.$api.get('/visit').then(({data}) => {
+      this.visitor = data.visitor
+      this.request = data.request
+    })
+  }
 };
 </script>
