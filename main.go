@@ -8,6 +8,7 @@ import (
 	"github.com/labstack/echo/middleware"
 	"log"
 	"net/http"
+	"os"
 	"path"
 	"strconv"
 )
@@ -42,14 +43,7 @@ func recordVisitorMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		//log.Println(c.Request().RequestURI)
 		if c.Request().RequestURI == "/" {
-			visit.Visitor += 1
-			var user User
-			if err = db.Where(User{IP: c.RealIP()}).First(&user).Error; err != nil {
-				db.Create(&User{IP: c.RealIP(), Count: 1})
-			} else {
-				user.Count += 1
-				db.Save(&user)
-			}
+			addVisitor(c)
 		}
 		visit.Request += 1
 		db.Save(&visit)
@@ -58,6 +52,10 @@ func recordVisitorMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 }
 
 func main() {
+	port := os.Getenv("port")
+	if port == "" {
+		port = "8080"
+	}
 	db, err = gorm.Open("sqlite3", "crawler/crawler/bulletin.db")
 	if err != nil {
 		log.Println(err)
@@ -75,7 +73,8 @@ func main() {
 	e.Static("/", path.Join("frontend", "dist"))
 	e.GET("/notices", fetchNotices)
 	e.GET("/visit", GetVisitData)
-	_ = e.Start(":8080")
+	e.GET("/visitor", AddVisitor)
+	e.Logger.Fatal(e.Start(":" + port))
 }
 
 func fetchNotices(c echo.Context) error {
@@ -97,4 +96,20 @@ func GetVisitData(c echo.Context) error {
 	var visit Visit
 	db.Find(&visit)
 	return c.JSON(http.StatusOK, visit)
+}
+
+func AddVisitor(c echo.Context) error {
+	addVisitor(c)
+	return c.JSON(http.StatusCreated, nil)
+}
+
+func addVisitor(c echo.Context) {
+	visit.Visitor += 1
+	var user User
+	if err = db.Where(User{IP: c.RealIP()}).First(&user).Error; err != nil {
+		db.Create(&User{IP: c.RealIP(), Count: 1})
+	} else {
+		user.Count += 1
+		db.Save(&user)
+	}
 }

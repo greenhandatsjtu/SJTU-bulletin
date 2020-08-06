@@ -66,7 +66,7 @@ export default {
   }),
   methods: {
     infiniteHandler($state) {
-      this.$api.get('/notices', {
+      this.$axios.get('/notices', {
         params: {
           page: this.page
         }

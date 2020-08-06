@@ -93,7 +93,7 @@ export default {
     },
   },
   beforeCreate() {
-    this.$api.get('/visit').then(({data}) => {
+    this.$axios.get('/visit').then(({data}) => {
       this.visitor = data.visitor
       this.request = data.request
     })
