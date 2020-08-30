@@ -2,7 +2,7 @@
   <v-app v-scroll="onScroll">
     <v-app-bar
         app
-        color="indigo"
+        color="#004098"
         dark
     >
       <div class="d-flex align-center">
