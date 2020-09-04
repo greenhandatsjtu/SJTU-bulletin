@@ -14,6 +14,7 @@ import (
 )
 
 type Notice struct {
+	ID    uint   `json:"id"`
 	Type  string `json:"_type"`
 	Date  string `json:"date"`
 	Href  string `json:"href"`
@@ -89,7 +90,7 @@ func fetchNotices(c echo.Context) error {
 	}
 	var notices []Notice
 	//enable paging
-	if err := db.Order("date desc").Offset(pageInt * 25).Limit(25).Find(&notices).Error; err != nil {
+	if err := db.Order("date desc, id desc").Offset(pageInt * 25).Limit(25).Find(&notices).Error; err != nil {
 		log.Println(err)
 		return c.JSON(http.StatusNotFound, nil)
 	}
