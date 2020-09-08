@@ -13,6 +13,7 @@ class NoticeSpider(scrapy.Spider):
     def start_requests(self):
         yield scrapy.Request(url='http://jwc.sjtu.edu.cn/web/sjtu/198076.htm', callback=self.parseJwc)
         yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/705-1-20.htm', callback=self.parseXsb)
+        yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/3016-1-20.htm', callback=self.parseXsb)
         yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/2496-1-20.htm', callback=self.parsePartTime)
         yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/2495-1-20.htm', callback=self.parseFullTime)
         yield scrapy.Request(url='https://www.sjtu.edu.cn/tg/index.html', callback=self.parseSjtuNotice)
