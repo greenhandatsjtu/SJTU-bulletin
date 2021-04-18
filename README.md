@@ -66,4 +66,4 @@ GO111MODULE=on go build -o server main.go
 + [ ] ~~页面cache~~
 + [x] 实现TapToTop
 + [x] 实现记录、统计访客和请求
-+ [ ] 重新适配教务处 http://www.jwc.sjtu.edu.cn/xwtg/tztg.htm
++ [x] 重新适配教务处 http://www.jwc.sjtu.edu.cn/xwtg/tztg.htm

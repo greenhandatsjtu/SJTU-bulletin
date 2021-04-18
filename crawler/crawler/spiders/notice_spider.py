@@ -12,12 +12,12 @@ class NoticeSpider(scrapy.Spider):
     # 声明请求链接和对应的解析函数
     def start_requests(self):
         yield scrapy.Request(url='http://www.jwc.sjtu.edu.cn/xwtg/tztg.htm', callback=self.parseNewJwc)
-        # yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/705-1-20.htm', callback=self.parseXsb)
-        # yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/3016-1-20.htm', callback=self.parseXsb)
-        # yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/2496-1-20.htm', callback=self.parsePartTime)
-        # yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/2495-1-20.htm', callback=self.parseFullTime)
-        # yield scrapy.Request(url='https://www.sjtu.edu.cn/tg/index.html', callback=self.parseSjtuNotice)
-        # yield scrapy.Request(url='http://ourhome.sjtu.edu.cn/news', callback=self.parseOurHome)
+        yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/705-1-20.htm', callback=self.parseXsb)
+        yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/3016-1-20.htm', callback=self.parseXsb)
+        yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/2496-1-20.htm', callback=self.parsePartTime)
+        yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/2495-1-20.htm', callback=self.parseFullTime)
+        yield scrapy.Request(url='https://www.sjtu.edu.cn/tg/index.html', callback=self.parseSjtuNotice)
+        yield scrapy.Request(url='http://ourhome.sjtu.edu.cn/news', callback=self.parseOurHome)
 
     # 爬取教务处通知
     def parseJwc(self, response):
