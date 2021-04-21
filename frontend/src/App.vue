@@ -39,7 +39,7 @@
           <v-avatar left>
             <v-icon>mdi-account-circle</v-icon>
           </v-avatar>
-          Visitor {{visitor}}
+          Visit {{visitor}}
         </v-chip>
         <v-chip
             class="mx-2 mt-1 font-weight-bold"
