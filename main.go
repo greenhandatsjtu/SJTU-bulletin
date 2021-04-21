@@ -11,6 +11,7 @@ import (
 	"os"
 	"path"
 	"strconv"
+	"sync"
 )
 
 type Notice struct {
@@ -31,6 +32,7 @@ var (
 	db    *gorm.DB
 	err   error
 	visit Visit
+	mu    sync.Mutex
 )
 
 // middleware to record visitor and request
@@ -40,8 +42,10 @@ func recordVisitorMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 		if c.Request().RequestURI == "/" {
 			addVisitor()
 		}
+		mu.Lock()
 		visit.Request += 1
 		db.Save(&visit)
+		mu.Unlock()
 		return next(c)
 	}
 }
@@ -92,6 +96,8 @@ func fetchNotices(c echo.Context) error {
 }
 
 func GetVisitData(c echo.Context) error {
+	mu.Lock()
+	defer mu.Unlock()
 	return c.JSON(http.StatusOK, visit)
 }
 
@@ -101,6 +107,8 @@ func AddVisitor(c echo.Context) error {
 }
 
 func addVisitor() {
+	mu.Lock()
+	defer mu.Unlock()
 	visit.Visitor++
 	db.Save(&visit)
 }
