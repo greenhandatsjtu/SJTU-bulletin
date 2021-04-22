@@ -12,6 +12,7 @@ class NoticeSpider(scrapy.Spider):
     # 声明请求链接和对应的解析函数
     def start_requests(self):
         yield scrapy.Request(url='http://www.jwc.sjtu.edu.cn/xwtg/tztg.htm', callback=self.parseNewJwc)
+        yield scrapy.Request(url='http://www.jwc.sjtu.edu.cn/index/mxxsdtz.htm', callback=self.parseNewJwc)
         yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/705-1-20.htm', callback=self.parseXsb)
         yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/3016-1-20.htm', callback=self.parseXsb)
         yield scrapy.Request(url='http://xsb.seiee.sjtu.edu.cn/xsb/list/2496-1-20.htm', callback=self.parsePartTime)
