@@ -39,10 +39,11 @@ var (
 func recordVisitorMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		//log.Println(c.Request().RequestURI)
-		if c.Request().RequestURI == "/" {
-			addVisitor()
-		}
 		mu.Lock()
+		if c.Request().RequestURI == "/visit" {
+			visit.Visitor++
+			db.Save(&visit)
+		}
 		visit.Request += 1
 		db.Save(&visit)
 		mu.Unlock()
@@ -67,16 +68,11 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Recover())
 	//e.Use(middleware.Logger())
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"https://sjtu-bulletin.vercel.app/"},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
-	}))
 	e.Use(recordVisitorMiddleware)
 
 	e.Static("/", path.Join("frontend", "dist"))
 	e.GET("/notices", fetchNotices)
-	e.GET("/visit", GetVisitData)
-	e.GET("/visitor", AddVisitor)
+	e.GET("/visit", getVisitData)
 	e.Logger.Fatal(e.Start(":" + port))
 }
 
@@ -95,20 +91,6 @@ func fetchNotices(c echo.Context) error {
 	return c.JSON(http.StatusOK, notices)
 }
 
-func GetVisitData(c echo.Context) error {
-	mu.Lock()
-	defer mu.Unlock()
+func getVisitData(c echo.Context) error {
 	return c.JSON(http.StatusOK, visit)
-}
-
-func AddVisitor(c echo.Context) error {
-	addVisitor()
-	return c.JSON(http.StatusCreated, nil)
-}
-
-func addVisitor() {
-	mu.Lock()
-	defer mu.Unlock()
-	visit.Visitor++
-	db.Save(&visit)
 }

@@ -18,17 +18,6 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-divider></v-divider>
-    <v-card class="mt-2">
-      <!--            复选框-->
-      <v-row align="center" dense justify="center" class="grey lighten-2">
-        <v-col :key="index" v-for="(checkbox, index) in checkboxes">
-          <v-checkbox :color="checkbox.color" :label="checkbox.label" :value="checkbox.value" class="px-0 my-2 mx-auto"
-                      hide-details
-                      v-model="selected"></v-checkbox>
-        </v-col>
-      </v-row>
-    </v-card>
     <v-list>
       <!--            使用自定义noticeItem组件-->
       <notice-item :key="index" :notice="notice" v-for="(notice,index) in showedNotices"></notice-item>
@@ -43,26 +32,18 @@ import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
   name: "Bulletin",
+  props: ['selected'],
   components: {NoticeItem, InfiniteLoading},
   data: () => ({
     page: 0,
     infiniteId: +new Date(),
     notices: [],
     showedNotices: [],
-    selected: [],
     snackbar: {
       open: false,
       message: null,
       status: "success",
     },
-    checkboxes: [
-      {value: 'jwc', label: '教务处', color: 'blue'},
-      {value: 'xsb', label: '学生办', color: 'teal'},
-      {value: 'sjtuNotice', label: '通知通告', color: 'red'},
-      {value: 'partTime', label: '实习信息', color: 'green'},
-      {value: 'fullTime', label: '全职招聘', color: 'orange'},
-      {value: 'ourHome', label: '生活园区', color: 'cyan'},
-    ]
   }),
   methods: {
     infiniteHandler($state) {
