@@ -7,7 +7,6 @@
         clipped-left
     >
       <div class="d-flex align-center">
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-img
             alt="SJTU Logo"
             class="shrink mr-2"
@@ -29,6 +28,7 @@
         <span class="mr-2">GitHub</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app clipped>

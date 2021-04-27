@@ -38,16 +38,11 @@ class NoticeSpider(scrapy.Spider):
         for new in news:
             item = NoticeItem()
             item['title'] = new.css('.wz>a>h2::text').get()
+            date = new.css('.sj>p::text').get() + '.' + new.css('.sj>h2::text').get()
+            item['date'] = re.sub(r'\.', '-', date)
             item['href'] = response.urljoin(new.css('.wz>a::attr(href)').get())
             item['_type'] = "jwc"
-            # yield item
-            yield scrapy.Request(item['href'], callback=self.getJwcNoticeDate, meta={"item": item})
-
-    # get jwc notice publish date
-    def getJwcNoticeDate(self, response):
-        item = response.request.meta['item']
-        item['date'] = response.css('.content-title>i::text').re(r'\d{4}-\d{2}-\d{2}')[0]
-        yield item
+            yield item
 
     # 爬取学生办通知
     def parseXsb(self, response):
