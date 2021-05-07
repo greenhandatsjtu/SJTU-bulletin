@@ -9,5 +9,11 @@ module.exports = {
                 changeOrigin: true
             }
         }
+    },
+    pwa: {
+        name: "SJTU Bulletin",
+        themeColor: "#004098",
+        msTileColor: "#ffffff",
+
     }
 }
